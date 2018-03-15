@@ -1,27 +1,104 @@
 apply plugin: 'com.android.application'
 
+// 加载配置文件
+Properties props = new Properties()
+FileInputStream fis = new FileInputStream(file("./config.properties"))
+BufferedReader bf = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+props.load(bf)
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion cfg.compileSdkVersion
     defaultConfig {
         applicationId "com.baidu.ocr.demo"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    // 签名配置
+    signingConfigs {
+        debug {
+            storeFile file(props['DEBUG_STORE_FILE'])
+            storePassword props['DEBUG_STORE_PASSWORD']
+            keyAlias props['DEBUG_KEY_ALIAS']
+            keyPassword props['DEBUG_KEY_PASSWORD']
+        }
         release {
-            minifyEnabled false
+            storeFile file(props['RELEASE_STORE_FILE'])
+            storePassword props['RELEASE_STORE_PASSWORD']
+            keyAlias props['RELEASE_KEY_ALIAS']
+            keyPassword props['RELEASE_KEY_PASSWORD']
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false  //不启用Proguard混淆
+            shrinkResources false //是否清理无用资源,依赖于minifyEnabled
+            zipAlignEnabled false //是否启用zipAlign压缩
+            signingConfig signingConfigs.debug
+        }
+        release {
+            debuggable false
+            minifyEnabled true //启用Proguard混淆
+            shrinkResources true //是否清理无用资源,依赖于minifyEnabled
+            zipAlignEnabled true //是否启用zipAlign压缩
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def fileName
+            if ("release" == variant.buildType.name) {
+                fileName = "baidu_orc_app_${variant.buildType.name}_${defaultConfig.versionName}_${getTime()}.apk"
+            } else {
+                fileName = "baidu_orc_app_${variant.buildType.name}_${defaultConfig.versionName}.apk"
+            }
+
+            outputFileName = fileName
+        }
+    }
+
+    productFlavors {
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile files('libs/ocr-sdk.jar')
-    compile project(path: ':ocr_ui')
+
+    //源代码依赖库 start
+    implementation project(':ocr_ui')
+    //源代码依赖库 end
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // support
+    implementation "com.android.support:appcompat-v7:${libs.support}"
+
+    // constraint-layout
+    implementation "com.android.support.constraint:constraint-layout:${libs.constraint}"
+
+    // 单元测试
+    testImplementation "junit:junit:${libs.junit}"
+    androidTestImplementation "com.android.support.test:runner:${libs.runner}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${libs.espresso}"
+
+}
+
+def static getTime() {
+    return new Date().format("yyyyMMddHHmmss", TimeZone.getDefault())
 }
