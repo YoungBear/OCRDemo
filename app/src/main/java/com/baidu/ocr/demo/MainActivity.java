@@ -3,12 +3,6 @@
  */
 package com.baidu.ocr.demo;
 
-import com.baidu.ocr.sdk.OCR;
-import com.baidu.ocr.sdk.OnResultListener;
-import com.baidu.ocr.sdk.exception.OCRError;
-import com.baidu.ocr.sdk.model.AccessToken;
-import com.baidu.ocr.ui.camera.CameraActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +12,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
+
+import com.baidu.ocr.sdk.OCR;
+import com.baidu.ocr.sdk.OnResultListener;
+import com.baidu.ocr.sdk.exception.OCRError;
+import com.baidu.ocr.sdk.model.AccessToken;
+import com.baidu.ocr.ui.camera.CameraActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -250,8 +250,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 请选择您的初始化方式
-        // initAccessToken();
-        initAccessTokenWithAkSk();
+         initAccessToken();
+//        initAccessTokenWithAkSk();
     }
 
     private boolean checkTokenStatus() {
