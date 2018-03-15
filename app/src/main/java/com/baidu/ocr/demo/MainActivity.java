@@ -4,12 +4,14 @@
 package com.baidu.ocr.demo;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.baidu.ocr.sdk.model.AccessToken;
 import com.baidu.ocr.ui.camera.CameraActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     private static final int REQUEST_CODE_GENERAL = 105;
     private static final int REQUEST_CODE_GENERAL_BASIC = 106;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean hasGotToken = false;
 
     private AlertDialog.Builder alertDialog;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void infoPopText(final String result) {
+        Log.d(TAG, "infoPopText: result: " + result);
         alertText("", result);
     }
 
@@ -326,10 +331,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，通用文字识别（含位置信息）
         if (requestCode == REQUEST_CODE_GENERAL && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recGeneral(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -337,10 +344,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，通用文字识别（含位置信息高精度版）
         if (requestCode == REQUEST_CODE_ACCURATE && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recAccurate(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -348,10 +357,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，通用文字识别
         if (requestCode == REQUEST_CODE_GENERAL_BASIC && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recGeneralBasic(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -359,10 +370,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，通用文字识别（高精度版）
         if (requestCode == REQUEST_CODE_ACCURATE_BASIC && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recAccurateBasic(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -370,10 +383,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，通用文字识别（含生僻字版）
         if (requestCode == REQUEST_CODE_GENERAL_ENHANCED && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recGeneralEnhanced(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -381,10 +396,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，网络图片文字识别
         if (requestCode == REQUEST_CODE_GENERAL_WEBIMAGE && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recWebimage(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -392,10 +409,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，银行卡识别
         if (requestCode == REQUEST_CODE_BANKCARD && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recBankCard(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -403,10 +422,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，行驶证识别
         if (requestCode == REQUEST_CODE_VEHICLE_LICENSE && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recVehicleLicense(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -414,10 +435,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，驾驶证识别
         if (requestCode == REQUEST_CODE_DRIVING_LICENSE && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recDrivingLicense(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -425,10 +448,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，车牌识别
         if (requestCode == REQUEST_CODE_LICENSE_PLATE && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recLicensePlate(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                     new RecognizeService.ServiceListener() {
                         @Override
                         public void onResult(String result) {
+                            dismissProgressDialog();
                             infoPopText(result);
                         }
                     });
@@ -436,10 +461,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，营业执照识别
         if (requestCode == REQUEST_CODE_BUSINESS_LICENSE && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recBusinessLicense(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                 new RecognizeService.ServiceListener() {
                     @Override
                     public void onResult(String result) {
+                        dismissProgressDialog();
                         infoPopText(result);
                     }
                 });
@@ -447,10 +474,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 识别成功回调，通用票据识别
         if (requestCode == REQUEST_CODE_RECEIPT && resultCode == Activity.RESULT_OK) {
+            showProgressDialog();
             RecognizeService.recReceipt(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
                 new RecognizeService.ServiceListener() {
                     @Override
                     public void onResult(String result) {
+                        dismissProgressDialog();
                         infoPopText(result);
                     }
                 });
@@ -463,5 +492,34 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         // 释放内存资源
         OCR.getInstance().release();
+    }
+
+    private void showProgressDialog() {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (null == mProgressDialog) {
+                    mProgressDialog = ProgressDialog.show(MainActivity.this,
+                            "",
+                            "正在识别，请稍后...",
+                            true,
+                            false);
+                } else if (!mProgressDialog.isShowing()){
+                    mProgressDialog.show();
+                }
+            }
+        });
+
+    }
+    private void dismissProgressDialog() {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (null != mProgressDialog) {
+                    mProgressDialog.dismiss();
+                }
+            }
+        });
+
     }
 }
