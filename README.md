@@ -21,11 +21,11 @@ OCR: Optical Character Recognition 光学字符识别
 
 可以在[百度sdk下载](http://ai.baidu.com/sdk)下载对应的**文字识别**模块下载AndroidSDK包。
 
-//todo 插入图片 baidu_orc_download_android_sdk.png
+![下载ORC Android SDK](https://github.com/YoungBear/OCRDemo/blob/master/pic_files/baidu_orc_download_android_sdk.png)
 
 下载完成，解压文件后，目录结构为：
 
-//todo 插入图片 baidu_ocr_sdk_directory.png
+![SDK目录结构](https://github.com/YoungBear/OCRDemo/blob/master/pic_files/baidu_ocr_sdk_directory.png)
 
 其中
 - libs为库文件目录
@@ -64,11 +64,11 @@ OCR: Optical Character Recognition 光学字符识别
 
 车牌识别结果：
 
-// todo 插入图片 baidu_ocr_license_plate_result.jpg
+![车牌识别结果](https://github.com/YoungBear/OCRDemo/blob/master/pic_files/baidu_ocr_license_plate_result.jpg)
 
-## [项目Github地址]()
+## [项目Github地址](https://github.com/YoungBear/OCRDemo)
 
-## [更多文章]()
+## [更多文章](https://github.com/YoungBear/MyBlog/blob/master/README.md)
 
 
 
