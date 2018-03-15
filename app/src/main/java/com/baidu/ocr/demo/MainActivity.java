@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 请选择您的初始化方式
-         initAccessToken();
+        initAccessToken();
 //        initAccessTokenWithAkSk();
     }
 
@@ -463,26 +463,26 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_BUSINESS_LICENSE && resultCode == Activity.RESULT_OK) {
             showProgressDialog();
             RecognizeService.recBusinessLicense(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
-                new RecognizeService.ServiceListener() {
-                    @Override
-                    public void onResult(String result) {
-                        dismissProgressDialog();
-                        infoPopText(result);
-                    }
-                });
+                    new RecognizeService.ServiceListener() {
+                        @Override
+                        public void onResult(String result) {
+                            dismissProgressDialog();
+                            infoPopText(result);
+                        }
+                    });
         }
 
         // 识别成功回调，通用票据识别
         if (requestCode == REQUEST_CODE_RECEIPT && resultCode == Activity.RESULT_OK) {
             showProgressDialog();
             RecognizeService.recReceipt(FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath(),
-                new RecognizeService.ServiceListener() {
-                    @Override
-                    public void onResult(String result) {
-                        dismissProgressDialog();
-                        infoPopText(result);
-                    }
-                });
+                    new RecognizeService.ServiceListener() {
+                        @Override
+                        public void onResult(String result) {
+                            dismissProgressDialog();
+                            infoPopText(result);
+                        }
+                    });
         }
 
     }
@@ -504,13 +504,14 @@ public class MainActivity extends AppCompatActivity {
                             "正在识别，请稍后...",
                             true,
                             false);
-                } else if (!mProgressDialog.isShowing()){
+                } else if (!mProgressDialog.isShowing()) {
                     mProgressDialog.show();
                 }
             }
         });
 
     }
+
     private void dismissProgressDialog() {
         this.runOnUiThread(new Runnable() {
             @Override

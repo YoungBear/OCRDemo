@@ -3,8 +3,6 @@
  */
 package com.baidu.ocr.ui.camera;
 
-import com.baidu.ocr.ui.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -15,6 +13,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.baidu.ocr.ui.R;
 
 public class OCRCameraLayout extends FrameLayout {
 

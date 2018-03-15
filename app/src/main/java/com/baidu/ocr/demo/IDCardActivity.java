@@ -3,17 +3,6 @@
  */
 package com.baidu.ocr.demo;
 
-import java.io.File;
-
-import com.baidu.ocr.sdk.OCR;
-import com.baidu.ocr.sdk.OnResultListener;
-import com.baidu.ocr.sdk.exception.OCRError;
-import com.baidu.ocr.sdk.model.IDCardParams;
-import com.baidu.ocr.sdk.model.IDCardResult;
-import com.baidu.ocr.ui.camera.CameraActivity;
-import com.baidu.ocr.ui.camera.CameraNativeHelper;
-import com.baidu.ocr.ui.camera.CameraView;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -29,6 +18,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.baidu.ocr.sdk.OCR;
+import com.baidu.ocr.sdk.OnResultListener;
+import com.baidu.ocr.sdk.exception.OCRError;
+import com.baidu.ocr.sdk.model.IDCardParams;
+import com.baidu.ocr.sdk.model.IDCardResult;
+import com.baidu.ocr.ui.camera.CameraActivity;
+import com.baidu.ocr.ui.camera.CameraNativeHelper;
+import com.baidu.ocr.ui.camera.CameraView;
+
+import java.io.File;
+
 public class IDCardActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PICK_IMAGE_FRONT = 201;
@@ -43,7 +43,7 @@ public class IDCardActivity extends AppCompatActivity {
                 .READ_EXTERNAL_STORAGE);
         if (ret != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(IDCardActivity.this,
-                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     1000);
             return false;
         }
@@ -61,25 +61,25 @@ public class IDCardActivity extends AppCompatActivity {
         //  调用身份证扫描必须加上 intent.putExtra(CameraActivity.KEY_NATIVE_MANUAL, true); 关闭自动初始化和释放本地模型
         CameraNativeHelper.init(this, OCR.getInstance().getLicense(),
                 new CameraNativeHelper.CameraNativeInitCallback() {
-            @Override
-            public void onError(int errorCode, Throwable e) {
-                String msg;
-                switch (errorCode) {
-                    case CameraView.NATIVE_SOLOAD_FAIL:
-                        msg = "加载so失败，请确保apk中存在ui部分的so";
-                        break;
-                    case CameraView.NATIVE_AUTH_FAIL:
-                        msg = "授权本地质量控制token获取失败";
-                        break;
-                    case CameraView.NATIVE_INIT_FAIL:
-                        msg = "本地质量控制";
-                        break;
-                    default:
-                        msg = String.valueOf(errorCode);
-                }
-                infoTextView.setText("本地质量控制初始化错误，错误原因： " + msg);
-            }
-        });
+                    @Override
+                    public void onError(int errorCode, Throwable e) {
+                        String msg;
+                        switch (errorCode) {
+                            case CameraView.NATIVE_SOLOAD_FAIL:
+                                msg = "加载so失败，请确保apk中存在ui部分的so";
+                                break;
+                            case CameraView.NATIVE_AUTH_FAIL:
+                                msg = "授权本地质量控制token获取失败";
+                                break;
+                            case CameraView.NATIVE_INIT_FAIL:
+                                msg = "本地质量控制";
+                                break;
+                            default:
+                                msg = String.valueOf(errorCode);
+                        }
+                        infoTextView.setText("本地质量控制初始化错误，错误原因： " + msg);
+                    }
+                });
 
         findViewById(R.id.gallery_button_front).setOnClickListener(new View.OnClickListener() {
             @Override
